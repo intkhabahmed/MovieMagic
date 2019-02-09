@@ -3,4 +3,8 @@
     <string name="movie_poster">Movie Poster</string>
     <string name="release_date_icon">Release date icon</string>
     <string name="rating_icon">Rating icon</string>
+    <string name="grid_view">Grid View</string>
+    <string name="sort_by">Sort By</string>
+    <string name="sort_by_release">Sort By Release</string>
+    <string name="sort_by_rating">Sort By Rating</string>
 </resources>

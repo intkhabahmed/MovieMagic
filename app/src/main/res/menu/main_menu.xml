@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/layout_type"
+        android:icon="@drawable/ic_grid_on_24dp"
+        android:title="@string/grid_view"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/sort"
+        android:icon="@drawable/ic_sort_24dp"
+        android:title="@string/sort_by"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/sort_by_release"
+                android:title="@string/sort_by_release"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/sort_by_rating"
+                android:title="@string/sort_by_rating"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+</menu>
