@@ -1,18 +1,16 @@
 package com.intkhabahmed.moviemagic.adapters
 
+import android.arch.paging.PagedListAdapter
 import android.databinding.DataBindingUtil
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.intkhabahmed.moviemagic.R
 import com.intkhabahmed.moviemagic.databinding.MovieItemBinding
 import com.intkhabahmed.moviemagic.models.Movie
-import com.intkhabahmed.moviemagic.models.Result
 
-class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
-
-    private var result: Result? = null
-    private lateinit var movies: List<Movie>
+class MoviesAdapter : PagedListAdapter<Movie, MoviesAdapter.MovieViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val adapterBinding: MovieItemBinding =
@@ -20,20 +18,22 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
         return MovieViewHolder(adapterBinding)
     }
 
-    override fun getItemCount(): Int {
-        return result?.search?.size ?: 0
-    }
-
     override fun onBindViewHolder(holder: MovieViewHolder, viewType: Int) {
-        holder.binding.movie = movies[holder.adapterPosition]
+        holder.binding.movie = getItem(holder.adapterPosition)
         holder.binding.invalidateAll()
     }
 
     class MovieViewHolder(var binding: MovieItemBinding) : RecyclerView.ViewHolder(binding.root)
 
-    fun setResult(result: Result) {
-        this.result = result
-        this.movies = result.search
-        notifyDataSetChanged()
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(old: Movie, new: Movie): Boolean {
+                return old.imdbID == new.imdbID
+            }
+
+            override fun areContentsTheSame(old: Movie, new: Movie): Boolean {
+                return old == new
+            }
+        }
     }
 }

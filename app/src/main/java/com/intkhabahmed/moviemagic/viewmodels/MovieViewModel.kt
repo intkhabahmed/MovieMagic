@@ -1,19 +1,17 @@
 package com.intkhabahmed.moviemagic.viewmodels
 
-import RepositoryProvider
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import android.util.Log
-import com.intkhabahmed.moviemagic.models.Result
+import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.PagedList
+import com.intkhabahmed.moviemagic.datasource.MovieDataSourceFactory
+import com.intkhabahmed.moviemagic.models.Movie
 
-class MovieViewModel(private val apikey: String, private val keyword: String, private val page: Int) : ViewModel() {
-    private var movies: LiveData<Result>? = null
-
-    fun getMovieResult(): LiveData<Result>? {
-        if (movies == null) {
-            Log.v(MovieViewModel::class.java.simpleName, "Loaded again from network")
-            movies = RepositoryProvider.provideRepository().searchMovies(apikey, keyword, page)
-        }
-        return movies
-    }
+class MovieViewModel(apikey: String, keyword: String) : ViewModel() {
+    private val movieDataSourceFactory = MovieDataSourceFactory(apikey, keyword)
+    val moviesPagedList: LiveData<PagedList<Movie>> = LivePagedListBuilder(
+        movieDataSourceFactory, PagedList.Config.Builder()
+            .setPageSize(10)
+            .build()
+    ).build()
 }

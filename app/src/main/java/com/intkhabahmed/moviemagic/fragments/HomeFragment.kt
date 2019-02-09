@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import com.intkhabahmed.moviemagic.R
 import com.intkhabahmed.moviemagic.adapters.MoviesAdapter
 import com.intkhabahmed.moviemagic.databinding.FragmentHomeBinding
-import com.intkhabahmed.moviemagic.models.Result
 import com.intkhabahmed.moviemagic.viewmodels.MovieViewModel
 import com.intkhabahmed.moviemagic.viewmodels.MovieViewModelProvider
 
@@ -38,9 +37,10 @@ class HomeFragment : Fragment() {
 
         val factory = MovieViewModelProvider(getString(R.string.api_key), "Lord")
         val movieViewModel = ViewModelProviders.of(this, factory).get(MovieViewModel::class.java)
-        movieViewModel.getMovieResult()!!.observe(viewLifecycleOwner, Observer {
+        movieViewModel.moviesPagedList.observe(viewLifecycleOwner, Observer {
             homeBinding.loadingPb.visibility = View.GONE
-            moviesAdapter.setResult(it ?: Result(listOf(), 0, false))
+            it?.sortBy { it.year }
+            moviesAdapter.submitList(it)
         })
     }
 }
