@@ -1,5 +1,7 @@
 package com.intkhabahmed.moviemagic.models
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import android.databinding.BindingAdapter
 import android.widget.ImageView
 import android.widget.TextView
@@ -7,31 +9,29 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.gson.annotations.SerializedName
 import com.intkhabahmed.moviemagic.R
-import com.intkhabahmed.moviemagic.network.ApiService
-import com.intkhabahmed.moviemagic.utils.Global
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
+@Entity(tableName = "movies")
 data class Movie(
     @SerializedName("Title")
     val title: String,
     @SerializedName("Year")
     val year: String,
+    @PrimaryKey(autoGenerate = false)
     val imdbID: String,
     @SerializedName("Type")
     val type: String,
     @SerializedName("Poster")
-    val poster: String,
-    var rating: Double,
-    var plot: String
+    val poster: String?,
+    var rating: Double?,
+    var plot: String?
 ) {
     companion object {
         @BindingAdapter("android:imageUrl")
         @JvmStatic
         fun loadImage(imageView: ImageView, imageUrl: String) {
             Glide.with(imageView.context)
-                .load(imageUrl)
+                .load(imageUrl.trim())
+                .thumbnail(0.5F)
                 .apply(
                     RequestOptions()
                         .placeholder(R.drawable.placeholder_movieimage)
@@ -42,32 +42,14 @@ data class Movie(
 
         @BindingAdapter("android:rating")
         @JvmStatic
-        fun setRating(view: TextView, imdbID: String) {
-            ApiService.create().searchMOvieById(Global.instance!!.getString(R.string.api_key), imdbID)
-                .enqueue(object : Callback<MovieDetail> {
-                    override fun onFailure(call: Call<MovieDetail>, t: Throwable) {
-
-                    }
-
-                    override fun onResponse(call: Call<MovieDetail>, response: Response<MovieDetail>) {
-                        view.text = String.format("%s/10", response.body()?.imdbRating.toString())
-                    }
-                })
+        fun setRating(view: TextView, imdbRating: String) {
+            view.text = String.format("%s/10", imdbRating)
         }
 
         @BindingAdapter("android:plot")
         @JvmStatic
-        fun setPlot(view: TextView, imdbID: String) {
-            ApiService.create().searchMOvieById(Global.instance!!.getString(R.string.api_key), imdbID)
-                .enqueue(object : Callback<MovieDetail> {
-                    override fun onFailure(call: Call<MovieDetail>, t: Throwable) {
-
-                    }
-
-                    override fun onResponse(call: Call<MovieDetail>, response: Response<MovieDetail>) {
-                        view.text = response.body()?.plot ?: "Loading..."
-                    }
-                })
+        fun setPlot(view: TextView, plot: String) {
+            view.text = plot
         }
     }
 }

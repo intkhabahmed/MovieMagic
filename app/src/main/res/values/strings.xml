@@ -7,4 +7,5 @@
     <string name="sort_by">Sort By</string>
     <string name="sort_by_release">Sort By Release</string>
     <string name="sort_by_rating">Sort By Rating</string>
+    <string name="default_sort">Default</string>
 </resources>
