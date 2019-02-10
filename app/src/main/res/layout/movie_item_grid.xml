@@ -58,8 +58,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/medium_space"
                 android:layout_marginTop="@dimen/medium_space"
+                android:layout_marginEnd="@dimen/medium_space"
                 android:ellipsize="end"
                 android:maxLines="@integer/max_plot_lines"
+                android:plot="@{movie.imdbID}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -80,10 +82,10 @@
                 android:id="@+id/rating_icon_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/medium_space"
+                android:layout_marginEnd="@dimen/medium_space"
                 android:contentDescription="@string/rating_icon"
                 app:layout_constraintBottom_toTopOf="@+id/release_icon_iv"
-                app:layout_constraintStart_toEndOf="@+id/release_date_tv"
+                app:layout_constraintEnd_toStartOf="@+id/rating_tv"
                 app:layout_constraintTop_toBottomOf="@+id/release_icon_iv"
                 app:srcCompat="@drawable/ic_star_24dp" />
 
@@ -103,12 +105,11 @@
                 android:id="@+id/rating_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/medium_space"
                 android:layout_marginEnd="@dimen/medium_space"
+                android:rating="@{movie.imdbID}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 app:layout_constraintBaseline_toBaselineOf="@+id/release_date_tv"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/rating_icon_iv"
                 tools:text="10/10" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>

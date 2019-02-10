@@ -1,5 +1,6 @@
 package com.intkhabahmed.moviemagic.network
 
+import com.intkhabahmed.moviemagic.models.MovieDetail
 import com.intkhabahmed.moviemagic.models.Result
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -15,6 +16,12 @@ interface ApiService {
         @Query("s") term: String,
         @Query("page") page: Int
     ): Call<Result>
+
+    @GET("/")
+    fun searchMOvieById(
+        @Query("apikey") apiKey: String,
+        @Query("i") imdbId: String
+    ): Call<MovieDetail>
 
     companion object Factory {
         private const val BASE_URL: String = "http://www.omdbapi.com"

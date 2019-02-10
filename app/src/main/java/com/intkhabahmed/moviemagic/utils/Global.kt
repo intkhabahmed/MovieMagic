@@ -14,7 +14,7 @@ class Global : Application() {
     }
 
     companion object {
-        private var instance: Global? = null
+        var instance: Global? = null
         private var sharedPreference: SharedPreferences? = null
         fun setGridOn(isGridOn: Boolean) {
             sharedPreference!!.edit().putBoolean(Constants.GRID_MODE, isGridOn).apply()
