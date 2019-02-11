@@ -28,9 +28,9 @@ data class Movie(
     companion object {
         @BindingAdapter("android:imageUrl")
         @JvmStatic
-        fun loadImage(imageView: ImageView, imageUrl: String) {
+        fun loadImage(imageView: ImageView, imageUrl: String?) {
             Glide.with(imageView.context)
-                .load(imageUrl.trim())
+                .load(imageUrl?.trim())
                 .thumbnail(0.5F)
                 .apply(
                     RequestOptions()
