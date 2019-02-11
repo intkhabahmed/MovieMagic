@@ -30,7 +30,7 @@ object Repository {
                                 }
 
                                 override fun onResponse(call: Call<Result>, response: Response<Result>) {
-                                    response.body()!!.search.map { it1 ->
+                                    response.body()?.search?.map { it1 ->
                                         if (it1 == null) return
                                         ApiService.create().searchMovieById(apikey, it1.imdbID)
                                             .enqueue(object : Callback<MovieDetail> {
