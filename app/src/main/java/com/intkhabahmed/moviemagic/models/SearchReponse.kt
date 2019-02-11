@@ -42,14 +42,8 @@ data class Movie(
 
         @BindingAdapter("android:rating")
         @JvmStatic
-        fun setRating(view: TextView, imdbRating: String) {
+        fun setRating(view: TextView, imdbRating: Double) {
             view.text = String.format("%s/10", imdbRating)
-        }
-
-        @BindingAdapter("android:plot")
-        @JvmStatic
-        fun setPlot(view: TextView, plot: String) {
-            view.text = plot
         }
     }
 }
